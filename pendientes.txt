@@ -1,0 +1,3 @@
+1.- Salida excel reporte
+2.- registrare en carpetas separadas
+3.- Cambiar Clave + Cambiar Clave personal
