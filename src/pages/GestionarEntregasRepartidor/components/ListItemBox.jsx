@@ -11,6 +11,9 @@ export const ListItemBox = ({item})=>{
                     </Typography>
                     <Grid container spacing={1}  mb={1}>
                         <Grid item xs={12} sm={4} md={3}>
+                            <Typography  variant="body2" >Fecha de Registro: {item.fecha_en_transito ?? '-'}</Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={3}>
                             <Typography  variant="body2" >Fecha de Reparto: {item.fecha_por_entregar ?? '-'}</Typography>
                         </Grid>
                         <Grid item xs={12} sm={4} md={3}>

@@ -183,14 +183,16 @@ export const EnhancedTableBody = ({ isSelectableRows,
                                             )
                                         }
 
-                                        const colorStyle = ( (row?._anulado != null && row._anulado == true) ? 'red' : 'rgba(0, 0, 0, 0.87)');
-                                        const styleCell =   {   fontSize: '12px', 
-                                                                padding:'4px 6px', 
-                                                                color :  colorStyle
-                                                            }
+                                        let styleCell = {};
+                                        const styleExternalCell = Boolean(headCol?.style) ? headCol?.style(row) : {};
+                                        if (Boolean(strechTable)){
+                                            styleCell = { ...styleExternalCell, fontSize: '12px', padding:'4px 6px' };
+                                        } else {
+                                            styleCell = { ...styleExternalCell };
+                                        }
 
                                         return <TableCell 
-                                                    sx={ Boolean(strechTable) ? styleCell : { color: colorStyle} } 
+                                                    sx={ styleCell } 
                                                     key={`${headCol.id}_${row.id}`} 
                                                     align={headCol.align}
                                                 >

@@ -8,4 +8,5 @@ export * from './GestionarDespachos/GestionarDespachos';
 export * from './Locales/Locales';
 export * from './Login/Login';
 export * from './Repartidores/Repartidores';
+export * from './ReporteEntregas/ReporteEntregas';
 export * from './Zonas/Zonas';

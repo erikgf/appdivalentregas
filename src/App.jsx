@@ -5,7 +5,8 @@ import './App.css';
 import { useUI } from './hooks/useUI';
 import useNotification from './hooks/useNotification';
 import { Clientes, Locales, Login, Repartidores, Colaboradores, Zonas, GestionarDespachos, 
-          ConsultarEntregasCliente, ConsultarEntregasClienteResumen, GestionarEntregasRepartidor } from './pages';
+          ConsultarEntregasCliente, ConsultarEntregasClienteResumen, GestionarEntregasRepartidor, 
+          ReporteEntregas} from './pages';
 
 function App() {
   const {  mensaje, onLimpiarMensaje } = useUI();
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/repartidores" element={<Repartidores />} />
                 <Route path="/colaboradores" element={<Colaboradores />} />
                 <Route path="/gestionar-despachos" element={<GestionarDespachos />} />
+                <Route path="/reporte-entregas" element={<ReporteEntregas />} />
                 {/*<Route path="/consultar-entregas" element={<ConsultarEntregas />} /> */}
                 <Route path="/consultar-entregas-cliente" element={<ConsultarEntregasCliente/>} />
                 <Route path="/consultar-entregas-cliente-resumen" element={<ConsultarEntregasClienteResumen />} />

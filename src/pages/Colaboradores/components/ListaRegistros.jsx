@@ -35,6 +35,9 @@ export const ListaRegistros = () => {
     
     const handleCambiarClave = (item) => {
         console.log({item});
+        /*
+        
+        */
     };
 
     useEffect(()=>{

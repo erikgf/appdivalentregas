@@ -48,7 +48,7 @@ export const ModalRegistrarEntrega = ({registro = null, flagModal = false, setFl
                             <Typography variant="h6">{registro?.numero_gavetas}</Typography>
                         </Grid>
                         <Grid item xs={4} md={2}>
-                            <InputLabel>N° Gavetas: </InputLabel>
+                            <InputLabel>N° Cajas: </InputLabel>
                             <Typography variant="h6">{registro?.numero_cajas}</Typography>
                         </Grid>             
                     </Grid>

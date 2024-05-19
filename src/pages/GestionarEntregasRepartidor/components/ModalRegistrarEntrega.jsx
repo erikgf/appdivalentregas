@@ -5,6 +5,7 @@ import { ImageBlock } from "./ImageBlock.jsx";
 import { useConsultarEntregasRepartidor } from "../hooks/useConsultarEntregasRepartidor.js";
 import { MdCamera as CameraIcon } from 'react-icons/md';
 import '../css/ModalRegistrarEntrega.css';
+import Compressor from "compressorjs";
 
 const modalRegisterTitle = "Registrando Entrega", modalEditTitle = "Editando Entrega", maxWidth = 'lg';
 
@@ -47,16 +48,25 @@ export const ModalRegistrarEntrega = () => {
 
     function handleChange(e) {
         const imagePicked = e.target.files[0];
-        setImages( images => {
-            return [
-                ...images, 
-                {
-                    id: new Date().getTime(),
-                    file: imagePicked,
-                    url: URL.createObjectURL(imagePicked)
-                }
-            ];
+
+        new Compressor(imagePicked, {
+            quality: 0.7, // 0.6 can also be used, but its not recommended to go below.
+            success: (imageCompressed) => {
+              // compressedResult has the compressed file.
+              // Use the compressed file to upload the images to your server.        
+                setImages( images => {
+                    return [
+                        ...images, 
+                        {
+                            id: new Date().getTime(),
+                            file: imageCompressed,
+                            url: URL.createObjectURL(imageCompressed)
+                        }
+                    ];
+                });
+            },
         });
+        
         e.target.value = null;
 
         setTimeout(()=>{
@@ -145,7 +155,7 @@ export const ModalRegistrarEntrega = () => {
                             <Typography variant="h6">{registro?.numero_gavetas}</Typography>
                         </Grid>
                         <Grid item xs={4} md={2}>
-                            <InputLabel>N° Gavetas: </InputLabel>
+                            <InputLabel>N° Cajas: </InputLabel>
                             <Typography variant="h6">{registro?.numero_cajas}</Typography>
                         </Grid>             
                     </Grid>

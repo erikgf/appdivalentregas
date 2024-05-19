@@ -8,7 +8,6 @@ export const clienteSlice = createSlice({
         seleccionado : null,
         cargandoSeleccionado: false,
         openModal: false,
-        message: null
    },
    reducers : {
         startListar : (state) =>{
@@ -17,12 +16,6 @@ export const clienteSlice = createSlice({
         },
         okListar : (state, {payload})=>{
             state.registros = payload;
-        },
-        errorListar : (state, {payload})=>{
-            state.message = {
-                text: payload, 
-                severity: "error"
-            };
         },
         finallyListar: (state) => {
             state.cargandoRegistros = false;
@@ -39,13 +32,6 @@ export const clienteSlice = createSlice({
         okLeer : ( state, { payload }) => {
             state.seleccionado = payload;
             state.openModal = true;
-        },
-        errorLeer : ( state, {payload}) => {
-            state.seleccionado = null;
-            state.message = {
-                text: payload, 
-                severity: "error"
-            };
         },
         finallyLeer : (state) => {
             state.cargandoSeleccionado = false;
@@ -72,19 +58,8 @@ export const clienteSlice = createSlice({
                     return registro;
                 })
             }
-            
-            state.message = {
-                text: 'Registro correcto.',
-                severity: 'success'
-            };
 
             state.openModal = false;
-        },
-        errorGuardar: (state, { payload }) => {
-            state.message = {
-                text: payload,
-                severity: 'error'
-            };
         },
         startEliminar: ( state) => {
             state.cargandoEliminar = true;
@@ -94,40 +69,22 @@ export const clienteSlice = createSlice({
                 return reg.id != id
             });
 
-            state.message = {
-                text: 'Eliminado correctamente.',
-                severity: 'success'
-            };
         },
-        errorEliminar: (state, { payload }) => {
-            state.message = {
-                text: payload,
-                severity: 'error'
-            };
-        },
-        limpiarMessage: (state) =>{
-            state.message = null;
-        }
    }
 });
 
 export const {
     startListar,
     okListar,
-    errorListar,
     finallyListar,
     nuevoRegistro,
     startLeer,
     okLeer,
-    errorLeer,
     finallyLeer,
     startGuardar,
     okGuardar,
-    errorGuardar,
     cancelarSeleccionado,
     startNuevoRegistro,
     startEliminar,
     okEliminar,
-    errorEliminar,
-    limpiarMessage
 } = clienteSlice.actions;

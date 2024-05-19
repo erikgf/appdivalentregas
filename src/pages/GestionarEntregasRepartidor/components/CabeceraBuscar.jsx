@@ -3,7 +3,7 @@ import { Grid, MenuItem, TextField } from "@mui/material"
 import { MdSearch as SearchIcon } from 'react-icons/md';
 import { useConsultarEntregasRepartidor } from "../hooks/useConsultarEntregasRepartidor";
 import { useEstadosBean } from "../../../hooks/useEstadosBean";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocalRepartidoresBean } from "../../../hooks/useLocalRepartidoresBean";
 import { useZonaRepartidoresBean } from "../../../hooks/useZonaRepartidoresBean";
 
@@ -24,6 +24,10 @@ export const CabeceraBuscar = () => {
         e.preventDefault();
         onListarEntregas(paramsBusqueda);
     };
+
+    useEffect(() => {
+        onListarEntregas(paramsBusqueda);
+    }, []);
 
     return <Grid component="form" container spacing={2}
                 onSubmit = {handleListar}  

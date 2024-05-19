@@ -1,15 +1,10 @@
 import {
     MdMap as MapIcon,
     MdStore as StoreIcon,
-    MdOutlineAllInbox as OutlineAllInboxIcon,
-    MdSupervisorAccount as SupervisorIcon,
     MdManageAccounts as ManageAccountsIcon,
+    MdBusAlert as CarIcon,
     MdOutbox as OutboxIcon,
-    MdTouchApp as TouchAppIcon,
-    MdOutlineFileCopy as MdOutlineFileCopyIcon,
-    MdOpenInBrowser as OpenInBrowserIcon,
-    MdPinch as PinchIcon,
-    MdEvent as EventIcon,
+    MdOutlineFileCopy as OutlineFileCopyIcon,
     MdAccountCircle as AccountCircleIcon
 } from 'react-icons/md';
 
@@ -35,7 +30,7 @@ const mainMenu = [
             {
                 name: "Repartidores",
                 url: "/repartidores",
-                icon: OutlineAllInboxIcon
+                icon: CarIcon
             },
             {
                 name: "Colaboradores",
@@ -63,7 +58,13 @@ const mainMenu = [
     },
     {
         name: "Reportes",
-        children: []
+        children: [
+            {
+                name: "Reporte de Entregas",
+                url: "/reporte-entregas",
+                icon: OutlineFileCopyIcon
+            }, 
+        ]
     }
 ];
 

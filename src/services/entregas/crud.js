@@ -10,8 +10,11 @@ export const getEntrega = async ({id}) => {
     return res.data;
 };
 
-export const getEntregas = async () => {
-    const res = await axiosPrivate.get(`/entregas`);
+export const getEntregas = async ({fechaInicio, fechaFin}) => {
+    const paramsData = new URLSearchParams({
+        fecha_inicio: fechaInicio, fecha_fin: fechaFin
+    });
+    const res = await axiosPrivate.get(`/entregas?${paramsData.toString()}`);
     return res.data;
 };
 
