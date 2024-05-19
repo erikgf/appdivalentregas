@@ -1,4 +1,4 @@
-name: React App build workflow
+name: App Dival Entregas - React Build Workflow
 on:
   push:
     branches:
