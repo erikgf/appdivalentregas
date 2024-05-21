@@ -24,7 +24,7 @@ export const useLocal = ()=>{
     };
 
     const onEliminarRegistro = async ({id})=>{
-        dispatch(startingEliminar|({id}));
+        dispatch(startingEliminar({id}));
     };
 
     const onCloseModal = () => {
