@@ -4,27 +4,30 @@ export const cambiarClaveSlice = createSlice({
    name : 'cambiarClave',
    initialState : {
         registro: null,
+        openModal: false,
         cargandoGuardar : false,
    },
    reducers : {
         startGuardar: (state) => {
             state.cargandoGuardar = true;
         },
-        okGuardar : ( state ) => {
-            state.record = null;
-        },
         finallyGuardar : (state) => {
             state.cargandoGuardar = false;
         },
-        setRegistro: (state , {payload : record}) =>{
-            state.record = record;
+        openModalCambiarClave: ( state, { payload: registro}) => {
+            state.openModal = true;
+            state.registro = registro;
+        },
+        closeModalCambiarClave: ( state) => {
+            state.openModal = false;
+            state.registro = null;
         }
    }
 });
 
 export const {
     startGuardar,
-    okGuardar,
     finallyGuardar,
-    setRegistro
+    openModalCambiarClave,
+    closeModalCambiarClave
 } = cambiarClaveSlice.actions;

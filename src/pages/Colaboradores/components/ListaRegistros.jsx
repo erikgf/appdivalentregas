@@ -6,12 +6,14 @@ import { useColaborador } from "../hooks/useColaborador";
 import { styles } from "../../../assets/styles";
 import { useEffect } from "react";
 import { headCells } from "../data/headCells";
+import { useFormCambiarClave } from "../../_common/FormCambiarClave/useFormCambiarClave";
 
 const tableTitle = "Gestionar Colaboradores";
 
 export const ListaRegistros = () => {
     const { registros, cargandoRegistros, cargandoEliminar, cargandoSeleccionado, 
             onListar, onEliminarRegistro, onNuevoRegistro, onLeerRegistro} = useColaborador();
+    const { cargandoGuardar : cargandoCambiarClave, onAbrirModal : onAbrirModalCambiarClave } = useFormCambiarClave();
     const { confirm } = useConfirm();
 
     const handleNuevoRegistro = () =>{
@@ -34,10 +36,7 @@ export const ListaRegistros = () => {
     };
     
     const handleCambiarClave = (item) => {
-        console.log({item});
-        /*
-        
-        */
+        onAbrirModalCambiarClave(item);
     };
 
     useEffect(()=>{
@@ -80,7 +79,7 @@ export const ListaRegistros = () => {
                         },
                         {
                             inRows: true, inToolbar: false, onOnlySelection: false,
-                            whenLoading: false,
+                            whenLoading: cargandoCambiarClave,
                             onHide: (item) => { return Boolean(item?.usuario) },
                             onClick : handleCambiarClave,
                             title : 'Cambiar Clave',

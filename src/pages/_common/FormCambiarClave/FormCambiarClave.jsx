@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalRegister } from "../../../components";
+import { useFormCambiarClave } from "./useFormCambiarClave";
+import { Grid, TextField } from "@mui/material";
 
 
 const titleModal = "Cambiar Clave Usuario";
@@ -8,17 +10,23 @@ const isCombinacionClavesValida = ( claveNueva, repetirClaveNueva ) => {
     return claveNueva === repetirClaveNueva && claveNueva != "";
 };
 
-export const FormCambiarClave = ({openModal = false, onCloseModal, onGuardar = ()=>{}}) => {
+export const FormCambiarClave = () => {
     const [claveNueva, setClaveNueva] = useState("");
     const [repetirClaveNueva, setRepetirClaveNueva] = useState("");
     const combinacionClaveValida =  isCombinacionClavesValida(claveNueva, repetirClaveNueva);
+    const { openModal, registro, cargandoGuardar, onGuardar, onCerrarModal } = useFormCambiarClave();
+
+    useEffect(()=>{
+        setClaveNueva("");
+        setRepetirClaveNueva("");
+    }, [openModal]);
 
     return <ModalRegister
-                modalTitle = {titleModal}
+                modalTitle = {`${titleModal}: ${ Boolean(registro) ? registro?.nombres_apellidos : ""}`}
                 okButtonText = 'Guardar'
                 open = { openModal }
                 handleModalClose = {()=>{
-                    onCloseModal();
+                    onCerrarModal();
                 }}
                 onSubmit = { (e)=>{
                     e.preventDefault();
@@ -27,34 +35,40 @@ export const FormCambiarClave = ({openModal = false, onCloseModal, onGuardar = (
                 submitEnabled = { combinacionClaveValida }
                 submitLoading={cargandoGuardar}
             >
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={4}>
-                        <TextField
-                            label="Clave Nueva"
-                            size="small"
-                            margin="dense"
-                            type="password"
-                            autoFocus
-                            fullWidth
-                            autoComplete="off"
-                            required
-                            value = {claveNueva}
-                            onChange = { (e)=>setClaveNueva(e.target.value)}
-                            />
-                    </Grid>
-                    <Grid item xs={12} sm={8}>
-                        <TextField
-                            label="Repetir Clave"
-                            size="small"
-                            margin="dense"
-                            type="passowrd"
-                            autoComplete="off"
-                            fullWidth
-                            required
-                            value = {repetirClaveNueva}
-                            onChange = { (e)=>setRepetirClaveNueva(e.target.value)}
-                            />
-                    </Grid>
-                </Grid>
+                {
+                    Boolean(registro) &&
+                        <Grid container spacing={4}>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Clave Nueva"
+                                    size="small"
+                                    margin="dense"
+                                    type="password"
+                                    autoFocus
+                                    fullWidth
+                                    color=  { combinacionClaveValida  ? "primary" : "error"}
+                                    autoComplete="off"
+                                    required
+                                    value = {claveNueva}
+                                    onChange = { (e)=>setClaveNueva(e.target.value)}
+                                    />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    label="Repetir Clave"
+                                    size="small"
+                                    margin="dense"
+                                    type="password"
+                                    color=  { combinacionClaveValida  ? "primary" : "error"}
+                                    autoComplete="off"
+                                    fullWidth
+                                    required
+                                    value = {repetirClaveNueva}
+                                    onChange = { (e)=>setRepetirClaveNueva(e.target.value)}
+                                    />
+                            </Grid>
+                        </Grid>
+                }
+                
             </ModalRegister>
 }

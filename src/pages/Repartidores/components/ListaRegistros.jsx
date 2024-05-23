@@ -1,17 +1,19 @@
 import { useEffect } from "react";
 import { Grid } from "@mui/material";
-import { MdAddCircle as AddCircleIcon, MdEdit as EditIcon, MdDelete as DeleteIcon, MdRefresh as RefreshIcon} from "react-icons/md";
+import { MdAddCircle as AddCircleIcon, MdEdit as EditIcon, MdDelete as DeleteIcon, MdLock as LockIcon, MdRefresh as RefreshIcon} from "react-icons/md";
 import { styles } from "../../../assets/styles";
 import { headCells } from "../data/headCells";
 import { useRepartidor } from "../hooks/useRepartidor";
 import useConfirm from "../../../hooks/useConfirm";
 import { TableManager } from "../../../components";
+import { useFormCambiarClave } from "../../_common/FormCambiarClave/useFormCambiarClave";
 
 const tableTitle = "Gestionar Repartidores";
 
 export const ListaRegistros = () => {
     const { registros, cargandoRegistros, cargandoEliminar, cargandoSeleccionado,
             onListar, onEliminarRegistro, onNuevoRegistro, onLeerRegistro} = useRepartidor();
+    const { cargandoGuardar : cargandoCambiarClave, onAbrirModal : onAbrirModalCambiarClave } = useFormCambiarClave();
     const { confirm } = useConfirm();
     
     const handleNuevoRegistro = () =>{
@@ -31,6 +33,10 @@ export const ListaRegistros = () => {
             onEliminarRegistro({id});
             return;
         }
+    };
+    
+    const handleCambiarClave = (item) => {
+        onAbrirModalCambiarClave(item);
     };
 
     useEffect(()=>{
@@ -69,6 +75,14 @@ export const ListaRegistros = () => {
                                 onClick : handleEditarRegistro,
                                 title : 'Editar',
                                 icon : <EditIcon/>
+                            },
+                            {
+                                inRows: true, inToolbar: false, onOnlySelection: false,
+                                whenLoading: cargandoCambiarClave,
+                                onHide: (item) => { return Boolean(item?.usuario) },
+                                onClick : handleCambiarClave,
+                                title : 'Cambiar Clave',
+                                icon : <LockIcon style={{color: styles.colorButtons.blue}}/>
                             },
                             {
                                 inRows: true, inToolbar: false, onOnlySelection: false,

@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
-import { Badge, Box, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
-import { MdMoreVert as MoreIcon, MdNotificationsNone as NotificationIcon } from 'react-icons/md'
+import { useState } from "react";
+import {Box, IconButton, Menu, MenuItem } from "@mui/material";
+import { MdMoreVert as MoreIcon } from 'react-icons/md'
 import { useAuth } from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-//import { useAtrasados } from "../../pages/Atrasados/hooks/useAtrasados";
+import { useFormCambiarClave } from "../../pages/_common/FormCambiarClave/useFormCambiarClave";
 
 export const UsuarioNavbar = ()=>{
     const { user, onCerrarSesion } = useAuth();
-    //const { cantidadAtrasados, onCargarAtrasados } = useAtrasados();
     const [anchorMenuEl, setAnchorMenuEl] = useState(null);
-    const navigate = useNavigate();
+    const { onAbrirModal } = useFormCambiarClave();
 
     const handleMenu = (event) => {
         setAnchorMenuEl(event.currentTarget);
@@ -23,13 +21,9 @@ export const UsuarioNavbar = ()=>{
         onCerrarSesion();
     };
 
-    const handleIrAtrasados = ()=>{
-        navigate("/atrasados");
+    const handleCambiarClave = ()=>{
+        onAbrirModal({ nombres_apellidos: user.name, usuario: { id: user.id}})
     };
-    
-    useEffect(()=>{
-        //onCargarAtrasados();
-    }, []);
 
     return  <Box>
                 {/*
@@ -70,7 +64,8 @@ export const UsuarioNavbar = ()=>{
                     open={Boolean(anchorMenuEl)}
                     onClose={handleMenuClose}
                 >
-                    <MenuItem dense divider>{user?.name}</MenuItem>
+                    <MenuItem dense >{user?.name}</MenuItem>
+                    <MenuItem dense divider onClick={handleCambiarClave}>Cambiar Clave</MenuItem>
                     <MenuItem dense onClick={handleCerrarSesion}>Cerrar Sesión</MenuItem>
                 </Menu>
             </Box>
