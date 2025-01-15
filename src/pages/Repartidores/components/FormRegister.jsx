@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Alert, Checkbox, Divider, FormControlLabel, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Checkbox, Divider, FormControlLabel, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { ModalRegister } from "../../../components";
 import { useForm } from "../../../hooks/useForm";
 import { useRepartidor } from "../hooks/useRepartidor";
@@ -119,65 +119,65 @@ export const FormRegister = () => {
                 </Grid>
             </Grid>
             { 
-                    valuesForm?.es_sistema && 
-                    <>
-                        <Divider sx={{marginTop: 2, marginBottom: 2}}/>
-                        <Typography variant="body2">Datos del sistema</Typography>
-                        <Grid container spacing={2} >
-                            <Grid item  xs={12} sm={4}>
-                                <TextField
-                                    label=" Usuario"
-                                    size="small"
-                                    margin="dense"
-                                    type="text"
-                                    fullWidth
-                                    InputProps= {
-                                        { readOnly : editandoRegistro && Boolean(seleccionado?.usuario)}
-                                    }
-                                    required
-                                    value = {valuesForm?.username ?? ""}
-                                    onChange={ (e)=>{
-                                        assignValueForm("username", e.target.value);
-                                    }}
-                                    />
-                            </Grid>
-                            {
-                                !(editandoRegistro && Boolean(seleccionado?.usuario)) &&
-                                    <Grid item  xs={12} sm={4}>
-                                        <TextField
-                                            label="Contraseña"
-                                            size="small"
-                                            margin="dense"
-                                            type="password"
-                                            fullWidth
-                                            required
-                                            value = {valuesForm?.password ?? ""}
-                                            onChange={ (e)=>{
-                                                assignValueForm("password", e.target.value);
-                                            }}
-                                            />
-                                    </Grid>
-                            }
-                            <Grid item xs={12} sm={4}>
-                                <TextField
-                                    label="Estado Acceso"
-                                    size="small"
-                                    margin="dense"
-                                    fullWidth
-                                    required
-                                    select
-                                    value = {valuesForm?.estado_acceso}
-                                    onChange={ (e)=>{
-                                        assignValueForm("estado_acceso", e.target.value);
-                                    }}
-                                >
-                                    <MenuItem value="A">ACTIVO</MenuItem>
-                                    <MenuItem value="I">INACTIVO</MenuItem>
-                                </TextField>
-                            </Grid>
+                valuesForm?.es_sistema && 
+                <>
+                    <Divider sx={{marginTop: 2, marginBottom: 2}}/>
+                    <Typography variant="body2">Datos del sistema</Typography>
+                    <Grid container spacing={2} >
+                        <Grid item  xs={12} sm={4}>
+                            <TextField
+                                label=" Usuario"
+                                size="small"
+                                margin="dense"
+                                type="text"
+                                fullWidth
+                                InputProps= {
+                                    { readOnly : editandoRegistro && Boolean(seleccionado?.usuario)}
+                                }
+                                required
+                                value = {valuesForm?.username ?? ""}
+                                onChange={ (e)=>{
+                                    assignValueForm("username", e.target.value);
+                                }}
+                                />
                         </Grid>
-                    </>
-                }
+                        {
+                            !(editandoRegistro && Boolean(seleccionado?.usuario)) &&
+                                <Grid item  xs={12} sm={4}>
+                                    <TextField
+                                        label="Contraseña"
+                                        size="small"
+                                        margin="dense"
+                                        type="password"
+                                        fullWidth
+                                        required
+                                        value = {valuesForm?.password ?? ""}
+                                        onChange={ (e)=>{
+                                            assignValueForm("password", e.target.value);
+                                        }}
+                                        />
+                                </Grid>
+                        }
+                        <Grid item xs={12} sm={4}>
+                            <TextField
+                                label="Estado Acceso"
+                                size="small"
+                                margin="dense"
+                                fullWidth
+                                required
+                                select
+                                value = {valuesForm?.estado_acceso}
+                                onChange={ (e)=>{
+                                    assignValueForm("estado_acceso", e.target.value);
+                                }}
+                            >
+                                <MenuItem value="A">ACTIVO</MenuItem>
+                                <MenuItem value="I">INACTIVO</MenuItem>
+                            </TextField>
+                        </Grid>
+                    </Grid>
+                </>
+            }
         </ModalRegister>
     )
 }

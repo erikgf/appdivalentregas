@@ -17,6 +17,7 @@ export const headCells = [
       disablePadding: false,
       label: 'CLIENTE',
     },
+    /*
     {
       id: 'cajas_cantidad',
       align: 'center',
@@ -35,6 +36,7 @@ export const headCells = [
       disablePadding: false,
       label: "# GUÍAS"
     },
+    */
     {
         id: 'observaciones',
         align: 'left',

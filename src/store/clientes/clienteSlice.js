@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import constants from "../../data/constants";
 
 export const clienteSlice = createSlice({
    name : 'cliente',
@@ -14,8 +15,18 @@ export const clienteSlice = createSlice({
             state.cargandoRegistros = true;
             state.registros = [];
         },
-        okListar : (state, {payload})=>{
-            state.registros = payload;
+        okListar : (state, {payload : lista})=>{
+            state.registros = lista.map( item => { 
+                const es_sistema = Boolean(item?.usuario);
+                const estado_acceso = es_sistema  
+                                        ? item?.usuario.estado_acceso == constants.ESTADO_ACTIVO ? constants.ESTADO_ACTIVO_DESC : constants.ESTADO_INACTIVO_DESC
+                                        : '-';
+                return {
+                    ...item,
+                    es_sistema : es_sistema ? constants.ESTADO_SI_DESC : constants.ESTADO_NO_DESC,
+                    estado_acceso,
+                }
+            });
         },
         finallyListar: (state) => {
             state.cargandoRegistros = false;
@@ -29,8 +40,16 @@ export const clienteSlice = createSlice({
             state.seleccionado = null ;
             state.cargandoSeleccionado = true;
         },
-        okLeer : ( state, { payload }) => {
-            state.seleccionado = payload;
+        okLeer : ( state, { payload : registro }) => {
+            const usuario = registro?.usuario;
+            state.seleccionado =  {
+                ...registro, 
+                formato_entregas_json: registro?.formato_entregas,
+                formato_entregas: Boolean(registro?.formato_entregas) ? JSON.parse(registro?.formato_entregas?.estructura).map((item, index) => ({...item, id: index})) : [],
+                es_sistema: Boolean(usuario), 
+                username: usuario?.username,
+                estado_acceso: usuario?.estado_acceso
+            };
             state.openModal = true;
         },
         finallyLeer : (state) => {
@@ -46,14 +65,24 @@ export const clienteSlice = createSlice({
         startGuardar: (state) => {
             state.cargandoGuardar = true;
         },
-        okGuardar : ( state, { payload }) => {
-            const nuevoRegistro = payload;
+        okGuardar : ( state, { payload : nuevoRegistro }) => {
+            const es_sistema = Boolean(nuevoRegistro?.usuario);
+            const estado_acceso = es_sistema  
+                                        ? nuevoRegistro?.usuario.estado_acceso == constants.ESTADO_ACTIVO ? constants.ESTADO_ACTIVO_DESC : constants.ESTADO_INACTIVO_DESC
+                                        : '-';
+
+            const nuevoRegistroMod =  {
+                ...nuevoRegistro,
+                es_sistema: es_sistema ? constants.ESTADO_SI_DESC : constants.ESTADO_NO_DESC,
+                estado_acceso
+            };
+
             if (!Boolean(state.seleccionado)){
-                state.registros.push(nuevoRegistro);
+                state.registros.push(nuevoRegistroMod);
             } else {
                 state.registros = state.registros.map(registro=>{
                     if (registro.id === state.seleccionado.id){
-                        return nuevoRegistro;
+                        return nuevoRegistroMod;
                     }
                     return registro;
                 })

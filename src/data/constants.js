@@ -1,0 +1,16 @@
+const  constants = {
+    TIPO_USUARIO_ADMIN: 1,
+    TIPO_USUARIO_AGENTE: 2,
+    TIPO_USUARIO_REPARTIDOR: 3,
+    TIPO_USUARIO_CLIENTE: 4,
+    ESTADO_ACTIVO : 'A',
+    ESTADO_ACTIVO_DESC : 'ACTIVO',
+    ESTADO_INACTIVO : 'I',
+    ESTADO_INACTIVO_DESC : 'INACTIVO',
+    ESTADO_SI : '1',
+    ESTADO_SI_DESC : 'SÍ',
+    ESTADO_NO : '0',
+    ESTADO_NO_DESC : 'NO'
+};
+
+export default constants;

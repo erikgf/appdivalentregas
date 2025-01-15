@@ -13,7 +13,8 @@ export const useClienteBean = () =>{
             setData(data.map(item => {
                 return {
                     id: item.id,
-                    descripcion: item.razon_social
+                    descripcion: item.razon_social,
+                    formato_entregas: item.formato_entregas
                 }
             }));
         } catch (e) {

@@ -20,6 +20,7 @@ export const reporteEntregasSlice = createSlice({
 
                 return {
                     id: entrega?.id,
+                    cliente: entrega?.despacho?.cliente.razon_social,
                     fechaRegistro : entrega.fecha_en_transito,
                     fechaRecojo : entrega?.fecha_por_entregar ?? "",
                     secuencia : entrega.despacho.secuencia,

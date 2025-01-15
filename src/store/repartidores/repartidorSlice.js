@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import constants from "../../data/constants";
 
 export const repartidorSlice = createSlice({
    name : 'repartidor',
@@ -18,13 +19,13 @@ export const repartidorSlice = createSlice({
             state.registros = lista.map( item => { 
                 const es_sistema = Boolean(item?.usuario);
                 const estado_acceso = es_sistema  
-                                        ? item?.usuario.estado_acceso == 'A' ? 'ACTIVO' : 'INACTIVO'
+                                        ? item?.usuario.estado_acceso == constants.ESTADO_ACTIVO ? constants.ESTADO_ACTIVO_DESC : constants.ESTADO_INACTIVO_DESC
                                         : '-';
                 const zonas_descripcion = item?.zonas.map( zona => zona.descripcion ).join(",");
 
                 return {
                     ...item,
-                    es_sistema : es_sistema ? "SÍ" : "NO",
+                    es_sistema : es_sistema ? constants.ESTADO_SI_DESC : constants.ESTADO_NO_DESC,
                     estado_acceso,
                     zonas_descripcion
                 }

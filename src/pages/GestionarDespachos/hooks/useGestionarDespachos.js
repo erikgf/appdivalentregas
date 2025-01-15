@@ -15,20 +15,7 @@ export const useGestionarDespachos = () => {
     };
 
     const onGuardarDespacho = (data, id)=>{
-        const dataForm = {
-            ...data,
-            entregas: data.entregas.map ( entrega => {
-                return {
-                    id : entrega.backend ? entrega.id : null,
-                    id_local: entrega.local.id,
-                    numero_cajas: entrega.numero_cajas,
-                    numero_gavetas: entrega.numero_gavetas,
-                    numero_guias: entrega.numero_guias
-                }
-            })
-        }
-
-       dispatch( startingSave({dataForm, id}) );
+       dispatch( startingSave({dataForm: data, id}) );
     };
 
     const onCerrarModal = () => {

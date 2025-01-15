@@ -23,5 +23,17 @@ export const headCells = [
       disablePadding: false,
       label: 'Dirección',
     },
+    {
+      id: 'es_sistema',
+      align: 'left',
+      disablePadding: false,
+      label: '¿Sistema?',
+    },
+    {
+      id: 'estado_acceso',
+      align: 'left',
+      disablePadding: false,
+      label: 'Estado Acceso',
+    },
   ];
   

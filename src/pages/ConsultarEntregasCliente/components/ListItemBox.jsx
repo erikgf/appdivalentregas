@@ -21,15 +21,13 @@ export const ListItemBox = ({item})=>{
                         </Grid>
                     </Grid>
                     <Grid container spacing={1}>
-                        <Grid item xs={4} sm={4} md={3}>
-                            <Typography  variant="body2" >Gavetas: {item.numero_gavetas}</Typography>
-                        </Grid>
-                        <Grid item xs={4} sm={4} md={3}>
-                            <Typography variant="body2" >Guías: {item.numero_guias}</Typography>
-                        </Grid>
-                        <Grid item xs={4} sm={4} md={3}>
-                            <Typography variant="body2" >Cajas: {item.numero_cajas}</Typography>
-                        </Grid>
+                        {
+                            item?.valores?.map( valor => (
+                                <Grid key={valor.key} item xs={4} sm={4} md={3}>
+                                    <Typography  variant="body2" >{valor.label}: {valor.value}</Typography>
+                                </Grid>
+                            ))
+                        }
                     </Grid>
                     {
                         Boolean(item.observaciones) &&

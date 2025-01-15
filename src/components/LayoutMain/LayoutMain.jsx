@@ -1,5 +1,7 @@
-import { Box } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { Navbar } from "../Navbar/Navbar"
+
+const VERSION = `${APP_VERSION}`;
 
 export const LayoutMain = ({children}) =>{
     return <>
@@ -7,5 +9,6 @@ export const LayoutMain = ({children}) =>{
         <Box p={2}>
             {children}
         </Box>
+        <Typography color={"gray"} fontWeight={"bold"} variant="caption" paddingLeft={1}>v.{VERSION}</Typography>
     </>
 }

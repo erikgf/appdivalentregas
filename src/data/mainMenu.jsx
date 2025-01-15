@@ -7,6 +7,7 @@ import {
     MdOutlineFileCopy as OutlineFileCopyIcon,
     MdAccountCircle as AccountCircleIcon
 } from 'react-icons/md';
+import constants from './constants';
 
 const mainMenu = [
     {
@@ -98,29 +99,17 @@ const repartidorMenu = [
         ]
     },
 ];
-/*
-export const navigationNames = [];
-
-mainMenu.forEach(e => {
-    e.children.forEach( m => {
-        navigationNames.push({
-            key : m.url.substring(1),
-            name: m.name
-        });
-    });
-});
-*/
 
 export const getMenuMain = (idRol = 0) => {
-    if ( idRol == 1){
+    if ( idRol == constants.TIPO_USUARIO_ADMIN || idRol == constants.TIPO_USUARIO_AGENTE){
         return mainMenu;
     }
 
-    if ( idRol == 2){
+    if ( idRol == constants.TIPO_USUARIO_CLIENTE){
         return clienteMenu;
     }
 
-    if ( idRol == 3){
+    if ( idRol == constants.TIPO_USUARIO_REPARTIDOR){
         return repartidorMenu;
     }
 

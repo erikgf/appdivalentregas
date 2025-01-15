@@ -22,7 +22,7 @@ export const FormCambiarClave = () => {
     }, [openModal]);
 
     return <ModalRegister
-                modalTitle = {`${titleModal}: ${ Boolean(registro) ? registro?.nombres_apellidos : ""}`}
+                modalTitle = {`${titleModal}: ${ Boolean(registro) ? registro?.nombres_apellidos || registro?.razon_social : ""}`}
                 okButtonText = 'Guardar'
                 open = { openModal }
                 handleModalClose = {()=>{

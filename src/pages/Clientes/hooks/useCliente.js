@@ -15,7 +15,13 @@ export const useCliente = ()=>{
     };
 
     const onGuardarRegistro = async (dataForm)=>{
-        dispatch(startingGuardar({dataForm, id: seleccionado?.id}));
+        dispatch(startingGuardar({
+            dataForm : {
+                ...dataForm, 
+                formato_entregas : dataForm.formato_entregas.map(({key, name, type}) => ({key, name, type})) 
+            }, 
+            id: seleccionado?.id
+        }));
     };
 
     const onLeerRegistro = async ({id})=>{

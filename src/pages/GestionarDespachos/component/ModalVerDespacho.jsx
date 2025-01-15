@@ -1,16 +1,16 @@
-import { memo } from "react";
 import { Box, Button, Checkbox, Chip, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { ModalRegister } from "../../../components/index.js"
 import { useVerDespacho } from "../hooks/useVerDespacho.js";
 import { ResumenPie } from "./ResumenPie.jsx";
 import { MdRemoveRedEye as EyeIcon } from "react-icons/md";
+import { Fragment } from "react";
 
 const modalTitle = "Visualizando Despachos/Día", maxWidth = 'lg';
-const cabecera = ["N°", "REPARTIDOR ASIGNADO","ZONA", "LOCAL",  "# CAJAS", "# GAVETAS","# GUIAS","STATUS"];
 
 export const ModalVerDespacho = () => {
     const { registro, entregas, flagModal,  cargandoAsignacion,
             onToggleAllEntregas, onToggleEntrega, onAsignarRepartidores, onLimpiarRegistro, onVerEntregaDetalle, onHabilitarModificarDespachos } = useVerDespacho();
+    const cabecera =  ["N°", "REPARTIDOR ASIGNADO","ZONA", "LOCAL", ...(Boolean(registro?.formato_entregas) ? registro?.formato_entregas?.map(item => item.name.toUpperCase()) : []) ,"STATUS"];
 
     const handleModalClose = () => {
         onLimpiarRegistro();
@@ -57,7 +57,14 @@ export const ModalVerDespacho = () => {
                                 </Grid>
                             </Box>
                             <Box m={2}>
-                                <Typography mt={2} mb={1} variant="body2" >Mostrando <b>{entregas?.length}</b> Entregas | Cajas: <b>{registro.cantidad_cajas}</b> | Guías: <b>{registro.cantidad_guias}</b> | Gavetas: <b>{registro.cantidad_gavetas}</b></Typography>
+                                <Typography mt={2} mb={1} variant="body2" >Mostrando <b>{entregas?.length}</b> Entregas 
+                                    {
+                                        registro?.formato_entregas.map( item => {
+                                            if (item.type != "integer") return false;
+                                            return <Fragment key={item.key}> | {item.name}: <b>{item.total}</b></Fragment> 
+                                        })
+                                    }
+                                </Typography>
                                 <TableContainer component={Paper}>
                                     <Table size="small" sx={{ minWidth: 650 }} >
                                         <TableHead>
@@ -106,9 +113,12 @@ export const ModalVerDespacho = () => {
                                                                 <TableCell padding="none">{repartidor}</TableCell>
                                                                 <TableCell padding="none">{entrega?.zona?.descripcion}</TableCell>
                                                                 <TableCell padding="none">{entrega?.local?.descripcion}</TableCell>
-                                                                <TableCell padding="none" align="center">{entrega.numero_cajas}</TableCell>
-                                                                <TableCell padding="none" align="center">{entrega.numero_gavetas}</TableCell>
-                                                                <TableCell padding="none" align="center">{entrega.numero_guias}</TableCell>
+                                                                {
+                                                                    Object.keys(entrega?.valores_formato).map( item => {
+                                                                        return <TableCell key={item} padding="none" align="center">{entrega?.valores_formato[item]}</TableCell>
+                                                                    })
+                                                                    //({[item]: a[item]})
+                                                                }
                                                                 <TableCell padding="none">
                                                                     <Chip sx={{width:'100%'}} size="small" label = {entrega.estado?.nombre} color={entrega.estado?.color} />
                                                                 </TableCell>

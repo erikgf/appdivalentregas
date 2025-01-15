@@ -14,7 +14,7 @@ const defaultValue = {
 };
 
 export const ConsultarEntregasClienteResumen = ()=> {
-    const { onListar, data, error, cargando} = useConsultarEntregasCliente();
+    const { onListar, data, cargando} = useConsultarEntregasCliente();
     const [paramsBusqueda, setParamsBusqueda] = useState(defaultValue)
 
     const navigate = useNavigate();
@@ -29,10 +29,7 @@ export const ConsultarEntregasClienteResumen = ()=> {
             idEstado = "E";
         }
 
-        console.log({dataIndex})
-
         navigate(`/consultar-entregas-cliente?z=${id_zona}&l=${id_local}&e=${idEstado}&fi=${paramsBusqueda?.fechaInicio}&ff=${paramsBusqueda?.fechaFin}`);
-        console.log(idEstado, paramsBusqueda);
     }
     
     return <>

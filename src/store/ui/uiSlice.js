@@ -10,6 +10,12 @@ export const uiSlice = createSlice({
         setMessage : ( state , { payload : message } ) => {
             state.message = message;
         },
+        setMessageOK : ( state , { payload : text } ) => {
+            state.message = {
+                text,
+                severity: "success",
+            };
+        },
         setMessageError : ( state, { payload : error }) => {
             state.message = processError(error);
         },
@@ -21,6 +27,7 @@ export const uiSlice = createSlice({
 
 export const {
     setMessage,
+    setMessageOK,
     setMessageError,
     unsetMessage
 } = uiSlice.actions;

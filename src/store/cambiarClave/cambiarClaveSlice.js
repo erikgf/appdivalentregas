@@ -17,6 +17,7 @@ export const cambiarClaveSlice = createSlice({
         openModalCambiarClave: ( state, { payload: registro}) => {
             state.openModal = true;
             state.registro = registro;
+            console.log({registro})
         },
         closeModalCambiarClave: ( state) => {
             state.openModal = false;

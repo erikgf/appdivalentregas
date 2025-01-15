@@ -1,31 +1,41 @@
 import { useState } from "react";
 
-const defaultEntregaValues = {
-    zona : null,
-    local: null,
-    numero_cajas: "",
-    numero_gavetas: "",
-    numero_guias: ""
+
+
+const isEntregaRegistrandoValido = (entregaRegistrando, formatoEntregas) => {
+    if (!Boolean(formatoEntregas)){
+        return false;
+    }
+    const formatoEntregasSoloKey = ["local", ...formatoEntregas.map( item => item.key)];
+    const keys = Object.keys(entregaRegistrando).filter( entregaKey => formatoEntregasSoloKey.includes(entregaKey));
+    const valores = keys.map( _key => entregaRegistrando[_key]);
+
+    for(let i=0; i< valores.length; i++){
+        if (!Boolean(valores[i])){
+            return false;
+        }
+    }
+
+    return true;
 };
 
-
-const isEntregaRegistrandoValido = (entregaRegistrando) => {
-    return entregaRegistrando?.zona &&
-            entregaRegistrando?.local &&
-                entregaRegistrando?.numero_cajas.toString() != "" &&
-                    entregaRegistrando?.numero_guias.toString() != "" &&
-                        entregaRegistrando?.numero_gavetas.toString() != "";
-
+const setDefaultValues = (setEntregaRegistrando) => {
+    setEntregaRegistrando( prev => {
+        const keys = Object.keys(prev);
+        keys.forEach( item => prev[item] = null);
+        return {
+            ...prev
+        };
+    })
 };
 
-export const useGestionarTablaEntregasDespacho = () => {
+export const useGestionarTablaEntregasDespacho = ({ entregaRegistrando, setEntregaRegistrando, formatoEntregas }) => {
     const [entregas, setEntregas] = useState([]);
-    const [entregaRegistrando, setEntregaRegistrando] = useState(defaultEntregaValues);
 
     const onSetInitEntregas = (arregloEntregas) => {
-        setEntregas(arregloEntregas.map ( e =>  {
+        setEntregas(arregloEntregas.map ( entrega =>  {
             return {
-                ...e,
+                ...entrega,
                 editando: false,
                 backend: true,
                 checked: false
@@ -33,7 +43,7 @@ export const useGestionarTablaEntregasDespacho = () => {
         }));
     };
 
-    //id, repartidor: {}, zona: {}, local : {}, cajas: #, guias: #, status READONLY
+    //id, repartidor: {}, zona: {}, local : {}, status READONLY
     const onAgregarEntrega = () => {
         if (Boolean(entregaRegistrando?.id)){
             setEntregas( entregas => {
@@ -48,7 +58,7 @@ export const useGestionarTablaEntregasDespacho = () => {
                     return entrega;
                 })
             });
-            setEntregaRegistrando(defaultEntregaValues);
+            setDefaultValues(setEntregaRegistrando);
             return;
         }
 
@@ -64,7 +74,7 @@ export const useGestionarTablaEntregasDespacho = () => {
                 }]
         );
 
-        setEntregaRegistrando(defaultEntregaValues);
+        setDefaultValues(setEntregaRegistrando);
     };
 
 
@@ -129,7 +139,8 @@ export const useGestionarTablaEntregasDespacho = () => {
                 return {...entrega, editando: false};
             })
         });
-        setEntregaRegistrando(defaultEntregaValues);
+
+        setDefaultValues(setEntregaRegistrando);
     };
 
     const onLimpiarEntregas = () => {
@@ -139,7 +150,7 @@ export const useGestionarTablaEntregasDespacho = () => {
     return {
        entregas,
        entregaRegistrando,
-       entregaRegistrandoValido : isEntregaRegistrandoValido(entregaRegistrando),
+       entregaRegistrandoValido : isEntregaRegistrandoValido(entregaRegistrando, formatoEntregas),
        setEntregaRegistrando,
        onAgregarEntrega,
        onQuitarEntrega,

@@ -56,18 +56,38 @@ export const despachoSlice = createSlice({
             state.recordLoading = true;
         },
         okRead : ( state, { payload : despacho }) => {
-            state.record = {
+            const formato_entregas = JSON.parse(despacho?.formato_entregas.estructura).map( item => ({...item, total: 0}));
+            const entregas = despacho.entregas.map( entrega => {
+                const valores_formato  = JSON.parse(entrega?.valores_formato);
+                formato_entregas.forEach((forma_entrega, i) => {
+                    if (forma_entrega.type === "integer"){
+                        formato_entregas[i].total += parseFloat(valores_formato[forma_entrega.key]);
+                    }
+                });
+
+                return {
+                    ...entrega,
+                    valores_formato,
+                    checked: false,
+                }
+            });
+
+            const record = {
                 ...despacho,
-                cantidad_gavetas: despacho.entregas_sum_numero_gavetas,
-                cantidad_cajas: despacho.entregas_sum_numero_cajas,
-                cantidad_guias : despacho.entregas_sum_numero_guias,
-                entregas: despacho.entregas.map( entrega => {
+                cliente: {
+                    ...despacho.cliente,
+                    formato_entregas
+                },
+                formato_entregas,
+                entregas: entregas.map ( item => {
                     return {
-                        ...entrega,
-                        checked: false,
+                        ...item,
+                        ...item.valores_formato
                     }
                 })
             };
+
+            state.record = record;
             state.openedRecordModal = true;
         },
         finallyRead : ( state ) => {
@@ -88,6 +108,22 @@ export const despachoSlice = createSlice({
                 entregas_cantidad = 0.00;
             }
 
+            const formato_entregas = JSON.parse(payload?.formato_entregas.estructura).map( item => ({...item, total: 0}));
+            const entregas = payload.entregas.map( entrega => {
+                const valores_formato  = JSON.parse(entrega?.valores_formato);
+                formato_entregas.forEach((forma_entrega, i) => {
+                    if (forma_entrega.type === "integer"){
+                        formato_entregas[i].total += parseFloat(valores_formato[forma_entrega.key]);
+                    }
+                });
+
+                return {
+                    ...entrega,
+                    valores_formato,
+                    checked: false,
+                }
+            });
+
             const newRecord = {
                 id : payload.id,
                 fechaRegistro: payload.fecha_registro,
@@ -95,10 +131,8 @@ export const despachoSlice = createSlice({
                 observaciones: payload.observaciones,
                 cliente: payload?.cliente.razon_social,
                 entregas_cantidad: `${payload.entregas_entregadas_count}/${payload.entregas_count} (${entregas_cantidad} %)`,
-                cajas_cantidad: payload.entregas_sum_numero_cajas,
-                gavetas_cantidad: payload.entregas_sum_numero_gavetas,
-                guias_cantidad: payload.entregas_sum_numero_guias,
             };
+
             if (!Boolean(state.record?.id)){
                 state.records.push(newRecord);
             } else {
@@ -112,7 +146,11 @@ export const despachoSlice = createSlice({
              
             state.openedRecordSaveModal = false;
             state.openedRecordModal = true;
-            state.record = payload;
+            state.record = {
+                ...payload,
+                formato_entregas,
+                entregas,
+            };
 
         },
         finallySave: ( state ) => {
@@ -200,10 +238,25 @@ export const despachoSlice = createSlice({
         },
         verEntregaDetalle : ( state, { payload: idEntrega}) => {
             state.openedRecordDetailModal = true
-            state.recordDetail = state.record.entregas?.find( entrega => entrega.id === idEntrega);
-            state.recordDetail.images = Boolean(state.recordDetail.cadena_fotos) 
-                                            ? JSON.parse(state.recordDetail.cadena_fotos)
-                                            : null;
+            const detail = state.record.entregas?.find( entrega => entrega.id === idEntrega);
+            const estructura = state?.record?.formato_entregas; 
+            const valores_formato = detail?.valores_formato;
+
+            const valores =  Boolean(valores_formato && estructura)
+                ? estructura.map( _item => {
+                    return {
+                        key: _item.key,
+                        label: _item.name,
+                        value: Boolean(valores_formato) ? valores_formato[_item.key] : null
+                    }
+                })
+                : []
+                
+            detail.images = Boolean(state.recordDetail?.cadena_fotos) 
+                                ? JSON.parse(state.recordDetail.cadena_fotos)
+                                : null;
+            detail.valores = valores;
+            state.recordDetail = detail;
         },
         cerrarEntregaDetalle : ( state )  => {
             state.openedRecordDetailModal = false;

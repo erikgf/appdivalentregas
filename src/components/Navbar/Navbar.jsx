@@ -37,7 +37,7 @@ export const Navbar = () =>{
 
     useEffect(()=>{
           const pathname = location.pathname.split("/")[1];
-          const { name } = navigationNames(user?.id_rol).find((e)=> e.key === pathname);
+          const { name } = navigationNames(user?.id_rol).find((e)=> e.key === pathname) || {};
           if (Boolean(name)){
             setNavbarName(name);
           }

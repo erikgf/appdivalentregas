@@ -18,10 +18,22 @@ export const entregasRepartidorSlice = createSlice({
         },
         okList : (state, {payload})=>{
             state.records = payload.map( item => {
+                const valores_formato = Boolean(item?.valores_formato) ? JSON.parse(item.valores_formato) : null;
+                const estructura = Boolean(item?.despacho?.formato_entregas?.estructura) ? JSON.parse(item.despacho.formato_entregas.estructura) : null;
+                const valores =  Boolean(valores_formato && estructura)
+                    ? estructura.map( _item => {
+                        return {
+                            key: _item.key,
+                            label: _item.name,
+                            value: Boolean(valores_formato) ? valores_formato[_item.key] : null
+                        }
+                    })
+                    : []
                 return {
                     ...item,
-                    images : JSON.parse(item?.cadena_fotos)
-                }
+                    images : JSON.parse(item?.cadena_fotos),
+                    valores
+                };
             });
         },
         finallyList : (state) => {

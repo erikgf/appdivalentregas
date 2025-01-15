@@ -11,6 +11,8 @@ export const ModalRegistrarEntrega = ({registro = null, flagModal = false, setFl
         setFlagModal(false);
     };
 
+    console.log({registro});
+
     return  <ModalRegister fullScreen = {true} 
                     open ={flagModal} 
                     modalTitle = { modalTitle } 
@@ -39,18 +41,14 @@ export const ModalRegistrarEntrega = ({registro = null, flagModal = false, setFl
                     <Divider sx={{mt: 1, mb: 1}}/>
                     <Typography variant="body2"><strong>Sobre la Entrega</strong></Typography>
                     <Grid container spacing={1}>
-                        <Grid item xs={4} md={2}>
-                            <InputLabel>N° Guías: </InputLabel>
-                            <Typography variant="h6">{registro?.numero_guias}</Typography>
-                        </Grid>
-                        <Grid item xs={4} md={2}>
-                            <InputLabel>N° Gavetas: </InputLabel>
-                            <Typography variant="h6">{registro?.numero_gavetas}</Typography>
-                        </Grid>
-                        <Grid item xs={4} md={2}>
-                            <InputLabel>N° Cajas: </InputLabel>
-                            <Typography variant="h6">{registro?.numero_cajas}</Typography>
-                        </Grid>             
+                        {
+                            registro?.valores?.map( valor => (
+                                <Grid key={valor.key} item xs={4} sm={4} md={2}>
+                                    <InputLabel>{valor.label}:</InputLabel>
+                                    <Typography variant="h6"> {valor.value}</Typography>
+                                </Grid>
+                            ))
+                        }           
                     </Grid>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Typography sx={{display:'flex', gap: '16px', justifyContent: {xs: 'space-around', md: 'flex-start'}}} variant="h6">

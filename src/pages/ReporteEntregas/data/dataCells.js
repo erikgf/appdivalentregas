@@ -1,5 +1,11 @@
 export const headCells = [
     {
+      id: 'cliente',
+      align: 'left',
+      disablePadding: true,
+      label: 'CLIENTE',
+    },
+    {
       id: 'fechaRegistro',
       align: 'left',
       disablePadding: true,
@@ -16,30 +22,6 @@ export const headCells = [
       align: 'left',
       disablePadding: false,
       label: 'SECUENCIA',
-    },
-    {
-      id: 'gavetasCantidad',
-      align: 'center',
-      disablePadding: false,
-      label: "GAVETAS"
-    },
-    {
-      id: 'cajasCantidad',
-      align: 'center',
-      disablePadding: false,
-      label: "CAJAS"
-    },
-    {
-      id: 'paquetesCantidad',
-      align: 'center',
-      disablePadding: false,
-      label: "PAQUETES"
-    },
-    {
-      id: 'guiasCantidad',
-      align: 'center',
-      disablePadding: false,
-      label: "GUÍAS"
     },
     {
         id: 'destino',

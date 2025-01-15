@@ -21,15 +21,15 @@ export const useExcelData = () => {
 
           worksheet.eachRow((row, rowNumber) => {
             const rowData = { id: rowNumber - 1 };
-            row.eachCell((cell, colNumber) => {
+            let i = 0;
+            row.eachCell(cell => {
               const formattedCell = formatDateCell(cell.value);
               if (rowNumber === 1) {
                 headersFromExcel.push(formattedCell);
               } else {
-                const header = headersFromExcel[colNumber - 1];
-                rowData[header] = formattedCell;
-                rowData[header] = rowData[header];
+                rowData[i] = formattedCell;
               }
+              i++;
             });
             if (rowNumber !== 1) {
               dataFromExcel.push(rowData);
