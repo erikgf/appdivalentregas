@@ -2,7 +2,7 @@
 export const useProcesadorDatosEntregas = () => {
 
     const onProcesarDatosAPie = (registros) => {
-        if (registros === null){
+        if (!Boolean(registros)  || registros?.length <= 0){
             return null;
         }
 

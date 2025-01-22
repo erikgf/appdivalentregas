@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { getHoy } from "../../assets/utils";
 import { CabeceraBuscar, BloquePieResumen } from "./components";
-import { useConsultarEntregasCliente } from "./hooks/useConsultarEntregasCliente";
+import { useConsultarEntregasClienteResumen } from "./hooks/useConsultarEntregasClienteResumen";
 import { useNavigate } from "react-router-dom";
+import constants from "../../data/constants";
 
 const hoy = getHoy();
 const defaultValue = {
-    idZona: "*",
-    idLocal: "*",
-    idEstado : "*",
+    idEstado : constants.ESTADO_TODOS,
     fechaInicio: hoy,
     fechaFin: hoy
 };
 
 export const ConsultarEntregasClienteResumen = ()=> {
-    const { onListar, data, cargando} = useConsultarEntregasCliente();
+    const { onListar, data, cargando, zonas, locales} = useConsultarEntregasClienteResumen();
     const [paramsBusqueda, setParamsBusqueda] = useState(defaultValue)
 
     const navigate = useNavigate();
@@ -34,6 +33,6 @@ export const ConsultarEntregasClienteResumen = ()=> {
     
     return <>
             <CabeceraBuscar onListar = {onListar} paramsBusqueda = {paramsBusqueda} setParamsBusqueda = {setParamsBusqueda}/>
-            <BloquePieResumen data = { data }  cargando = { cargando } ir = {ir} />
+            <BloquePieResumen data = { data }  cargando = { cargando } ir = {ir} listaZonas = {zonas} listaLocales = {locales} />
         </>
 };

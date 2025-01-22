@@ -78,7 +78,7 @@ export const despachoSlice = createSlice({
                     ...despacho.cliente,
                     formato_entregas
                 },
-                formato_entregas,
+                formato_entregas : formato_entregas.map( item => ({...item, total: parseInt(item.total)})),
                 entregas: entregas.map ( item => {
                     return {
                         ...item,
@@ -115,6 +115,7 @@ export const despachoSlice = createSlice({
                     if (forma_entrega.type === "integer"){
                         formato_entregas[i].total += parseFloat(valores_formato[forma_entrega.key]);
                     }
+                    formato_entregas[i].total = parseFloat(formato_entregas[i].total).toFixed(0);
                 });
 
                 return {
@@ -148,7 +149,7 @@ export const despachoSlice = createSlice({
             state.openedRecordModal = true;
             state.record = {
                 ...payload,
-                formato_entregas,
+                formato_entregas : formato_entregas.map( item => ({...item, total: parseInt(item.total)})),
                 entregas,
             };
 

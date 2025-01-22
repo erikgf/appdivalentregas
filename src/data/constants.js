@@ -3,6 +3,7 @@ const  constants = {
     TIPO_USUARIO_AGENTE: 2,
     TIPO_USUARIO_REPARTIDOR: 3,
     TIPO_USUARIO_CLIENTE: 4,
+    ESTADO_TODOS : "*",
     ESTADO_ACTIVO : 'A',
     ESTADO_ACTIVO_DESC : 'ACTIVO',
     ESTADO_INACTIVO : 'I',
@@ -10,7 +11,10 @@ const  constants = {
     ESTADO_SI : '1',
     ESTADO_SI_DESC : 'SÍ',
     ESTADO_NO : '0',
-    ESTADO_NO_DESC : 'NO'
+    ESTADO_NO_DESC : 'NO',
+    ESTADO_PENDIENTE: 'P',
+    ESTADO_TRANSITO: 'T',
+    ESTADO_ENTREGADO: 'E'
 };
 
 export default constants;

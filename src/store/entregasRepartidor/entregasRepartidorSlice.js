@@ -9,7 +9,8 @@ export const entregasRepartidorSlice = createSlice({
         recordLoading: false,
         recordSavingLoading : false,
         openedRecordModal : false,
-        openedRecordSaveModal: false
+        openedRecordSaveModal: false,
+        empresas : []
    },
    reducers : {
         startList : (state) =>{
@@ -17,6 +18,7 @@ export const entregasRepartidorSlice = createSlice({
             state.records = [];
         },
         okList : (state, {payload})=>{
+            const empresas = [];
             state.records = payload.map( item => {
                 const valores_formato = Boolean(item?.valores_formato) ? JSON.parse(item.valores_formato) : null;
                 const estructura = Boolean(item?.despacho?.formato_entregas?.estructura) ? JSON.parse(item.despacho.formato_entregas.estructura) : null;
@@ -28,13 +30,25 @@ export const entregasRepartidorSlice = createSlice({
                             value: Boolean(valores_formato) ? valores_formato[_item.key] : null
                         }
                     })
-                    : []
+                    : [];
+
+                const { cliente } = item.despacho;
+
+                if (!(empresas.find( _item => _item.id === cliente.id))){
+                    empresas.push({
+                        id: cliente.id,
+                        razon_social : cliente.razon_social
+                    });
+                }
+
                 return {
                     ...item,
                     images : JSON.parse(item?.cadena_fotos),
                     valores
                 };
             });
+
+            state.empresas = empresas;
         },
         finallyList : (state) => {
             state.recordsLoading = false;

@@ -3,7 +3,7 @@ import { startingList, startingSaveEntrega } from "../../../store/entregasRepart
 import { closeModal, closeModalSave, seleccionarEntrega } from "../../../store/entregasRepartidor/entregasRepartidorSlice";
 
 export const useConsultarEntregasRepartidor = () =>{
-    const { record, recordLoading, records, recordsLoading, recordSavingLoading, openedRecordModal, openedRecordSaveModal } = useSelector( state => state.entregasRepartidor );
+    const { record, recordLoading, records, recordsLoading, recordSavingLoading, openedRecordModal, openedRecordSaveModal, empresas } = useSelector( state => state.entregasRepartidor );
     const dispatch = useDispatch();
 
     const onListarEntregas = async ({idZona, idLocal, idEstado}) => {
@@ -41,6 +41,7 @@ export const useConsultarEntregasRepartidor = () =>{
         cargandoGuardando : recordSavingLoading,
         flagModal: openedRecordModal,
         flagModalSave: openedRecordSaveModal,
+        empresas,
         onListarEntregas,
         onSeleccionarEntrega,
         onSeleccionarEntregaParaEditar,

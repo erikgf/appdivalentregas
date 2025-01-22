@@ -11,8 +11,6 @@ export const ModalRegistrarEntrega = ({registro = null, flagModal = false, setFl
         setFlagModal(false);
     };
 
-    console.log({registro});
-
     return  <ModalRegister fullScreen = {true} 
                     open ={flagModal} 
                     modalTitle = { modalTitle } 

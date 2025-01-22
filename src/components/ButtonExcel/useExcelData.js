@@ -51,6 +51,11 @@ export const useExcelData = () => {
       const formattedDate = cell.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
       return formattedDate;
     }
+
+    if (cell?.formula){
+      return cell.result;
+    }
+
     return cell;
   };
 

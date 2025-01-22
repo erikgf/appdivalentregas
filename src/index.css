@@ -66,4 +66,5 @@ body {
   background-image: url("assets/logo-main-ma.png");
   background-repeat:no-repeat;
   background-position: center center;
+  overflow: hidden;
 }

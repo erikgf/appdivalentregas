@@ -53,7 +53,7 @@ export const FormRegister = () => {
             ? ({
                 ...item,
                 name: item._name.trim(),
-                key: item._name.trim().toLowerCase().replaceAll(" ", "_"),
+                key: item._name.trim().toLowerCase().replaceAll(" ", "_").replaceAll(".",""),
                 type: item._type.trim(),
                 isEditing: false
             })
